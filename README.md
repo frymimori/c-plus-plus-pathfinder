@@ -1,4 +1,4 @@
-## C Pathfinder
+## C++ Pathfinder
 
 #### Description
 Create shortest path traversals in grid graphs using C++ with a fast and unique pathfinding algorithm.
