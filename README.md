@@ -3,9 +3,9 @@
 #### Description
 Create shortest path traversals in grid graphs using C++ with a fast and unique pathfinding algorithm.
 
-- Allocates static memory with stack instead of heap
-- Compiles with forward-compatible C++98
-- Conforms to strict ISO C++ with -pedantic-errors enabled
+- Allocates memory without dynamic memory allocation functions
+- Compiles with forward-compatible `C++98`
+- Conforms to strict ISO C++ with `-pedantic-errors` enabled
 - Defines a destination, obstacles, a source and traversable spaces with numbers
 - Efficient without multithreading or processor-specific vectorization
 - Fast grid pathfinding speed without relying on compiler optimization
@@ -16,12 +16,13 @@ Create shortest path traversals in grid graphs using C++ with a fast and unique 
 - Navigates in 4 directions with non-diagonal movement only
 - Navigates in 8 directions with diagonal and non-diagonal movement
 - Optimized for calculation speed and minimal memory usage
+- Overwrites previous paths for granular weighted space calculation outside of scope
 - Path trees are traversed and reversed efficiently in existing grid memory
 - Returns a count of spaces traversed and a marked traversal path
 - Traversal direction calculation is optimized with minimal conditional statements
-- Traversal paths auto-correct with natural-looking traversal
-- Traverses safely within bounds of a rectangular grid
-- Unique algorithm without A* or Dijkstra algorithms
+- Traversal paths auto-correct with natural-looking navigation
+- Traverses safely within bounds of obstacles in a rectangular grid
+- Unique path navigation algorithm without A*, BFS, DFS, Dijkstra or PSO
 
 #### Usage
 Clone the repository in the current directory with the command `git`.
@@ -49,20 +50,20 @@ int main(void) {
 	unsigned long c = 0;
 	unsigned long d;
 	unsigned char e[165] = {
-		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0,
-		0, 0, 0, 7, 7, 7, 0, 7, 0, 0, 0,
-		0, 0, 0, 7, 0, 7, 7, 7, 0, 0, 0,
-		0, 0, 0, 7, 0, 7, 0, 0, 0, 0, 0,
-		0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		1, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 7, 4, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 7, 0, 4, 0, 0, 0,
+		0, 0, 0, 0, 0, 7, 0, 0, 4, 0, 0,
+		0, 0, 0, 0, 0, 7, 0, 0, 4, 0, 0,
+		0, 0, 0, 7, 7, 7, 0, 7, 4, 0, 0,
+		0, 0, 0, 7, 0, 7, 7, 7, 4, 0, 0,
+		0, 0, 0, 7, 0, 7, 0, 4, 0, 0, 0,
+		0, 7, 7, 7, 7, 7, 4, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0,
+		7, 7, 7, 7, 7, 4, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0,
+		0, 2, 4, 4, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	};
 	d = pathfinder::A(a, b, e);
@@ -106,7 +107,7 @@ The length must be the result of `a * b`.
 
 The grid graph spaces are defined as the following numbers.
 
-- `0` Traversable
+- `0` or `4` Traversable
 - `1` Source
 - `2` Destination
 - `7` Obstacle
@@ -116,7 +117,7 @@ The grid must have a single source `1` and a single destination `2`.
 If the destination `2` can't be reached, the grid path is unmodified and the return value `d` is defined as `0`.
 
 ``` console
-gcc -o c-plus-plus-pathfinder -pedantic-errors -std=c++98 pathfinder.cpp test.cpp && ./c-plus-plus-pathfinder
+gcc -o c-plus-plus-pathfinder -pedantic-errors -std=c++98 pathfinder.cpp test.cpp
 ```
 
 The output from the command `./c-plus-plus-pathfinder` is the grid graph with the shortest path traversal spaces defined as `4`.
