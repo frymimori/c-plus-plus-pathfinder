@@ -36,7 +36,7 @@ int main(void) {
 	while (a != c) {
 		printf("%u ", e[c]);
 
-		if ((c + 1) % b == 0) {
+		if (((c + 1) % b) == 0) {
 			printf("\n");
 		}
 
